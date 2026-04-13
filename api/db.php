@@ -2,12 +2,25 @@
 $host = "localhost";
 $dbname = "testdb";
 $user = "testuser";
-$password = "password";
+$password = "abc";
 
 try {
-    $conn = new PDO("pgsql:host=$host;dbname=$dbname", $user, $password);
+    $conn = new PDO(
+        "pgsql:host=$host;dbname=$dbname",
+        $user,
+        $password
+    );
+
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 } catch (PDOException $e) {
-    echo "DB接続エラー: " . $e->getMessage();
+    http_response_code(500);
+    header("Content-Type: application/json");
+
+    echo json_encode([
+        "status" => "error",
+        "message" => "DB connection failed"
+    ]);
     exit;
 }
 ?>
