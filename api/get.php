@@ -2,11 +2,20 @@
 header("Content-Type: application/json");
 require "db.php";
 
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    http_response_code(405);
+    echo json_encode([
+        "status" => "error",
+        "message" => "Method not allowed"
+    ]);
+    exit;
+}
+
 try {
     $sql = "SELECT * FROM weather_notes ORDER BY id DESC";
     $stmt = $conn->query($sql);
 
-    $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $data = $stmt->fetchAll();
 
     echo json_encode($data);
 
@@ -14,7 +23,7 @@ try {
     http_response_code(500);
     echo json_encode([
         "status" => "error",
-        "message" => $e->getMessage()
+        "message" => "Failed to fetch data"
     ]);
 }
 ?>

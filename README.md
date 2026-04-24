@@ -44,3 +44,16 @@ http://3.27.107.101/
 
 - OpenWeather API  
 https://openweathermap.org/api
+
+---
+
+## 環境変数
+
+実行前に以下を設定してください。
+
+- `DB_HOST`
+- `DB_PORT` 省略時は `5432`
+- `DB_NAME`
+- `DB_USER`
+- `DB_PASSWORD`
+- `OPENWEATHER_API_KEY`
